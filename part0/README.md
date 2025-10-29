@@ -16,8 +16,8 @@ Part 0.3: HTML Form Review
 [text](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Your_first_form)
 -->
 
-###Part 0.4: New Note Diagram
-###Part 0.5: Single Page Applications(SPA) Diagram
-###Part 0.6: New Note in SPA Diagram
+### Part 0.4: New Note Diagram <br/>
+### Part 0.5: Single Page Applications(SPA) Diagram <br/>
+### Part 0.6: New Note in SPA Diagram <br/>
 
 
