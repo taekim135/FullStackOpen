@@ -1,6 +1,6 @@
 # Part 0
-#### Start Date: Oct 2025
-#### End Date: Ongoing
+#### Start Date: Oct 28 2025
+#### End Date: Oct 29 2025
 
 This part covers the course structure/outline and basic concepts of web development, including HTML, CSS, and JavaScript. <br/>
 
