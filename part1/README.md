@@ -7,6 +7,6 @@ This part covers Intro to React, Javascript, Complex States, Event handling, etc
 
 #### Exercises:
 
-- Ex 1.3 - 1.5: CourseInfo
+- Ex 1.1 - 1.5: CourseInfo
 - Ex 1.6 - 1.11: Unicafe
 - Ex 1.12 - 1.14: Anecdotes 
