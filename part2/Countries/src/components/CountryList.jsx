@@ -4,7 +4,6 @@ const CountryList = (prop) =>{
     if (prop.length > 10){
         return <p>Too many mathces, specify another filter</p>
     }
-
     return(
         prop.list.map(country =>
 
@@ -17,6 +16,7 @@ const CountryList = (prop) =>{
                 area = {country.area} 
                 languages = {country.languages}
                 population = {country.population}
+                onClick = {prop.onClick}
             />
         )
     )

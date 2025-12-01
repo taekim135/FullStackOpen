@@ -1,12 +1,11 @@
 const Country = (prop) =>{
     if (prop.length < 10 && prop.length > 1){
-        return  <ul><li>{prop.name}</li></ul>
+        return  <ul><li>{prop.name} <button onClick ={()=>prop.onClick(prop.name)}>Show</button></li></ul>
     }
-           
+
     return(  
         <>
             <h1>{prop.name}</h1>
-            
             Capital: {prop.capital.map(cap => <ul key ={cap}><li>{cap}</li></ul>)}
             <p>Area: {prop.area}</p>
             Languages: {Object.values(prop.languages).map(lang => <ul key ={lang}><li>{lang}</li></ul>)}
