@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import Contacts from './components/Contacts'
 import PersonForm from './components/PersonForm'
-import Filter from './components/Filter'
 import book from './services/persons'
 import { useEffect } from 'react'
 import Notification from './components/Notification'
