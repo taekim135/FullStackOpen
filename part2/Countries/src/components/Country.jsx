@@ -1,3 +1,9 @@
+import weatherAPI from "../services/weather";
+
+
+const weather = weatherAPI.getWeather("Seoul")
+console.log(weather)
+
 const Country = (prop) =>{
     if (prop.length < 10 && prop.length > 1){
         return  <ul><li>{prop.name} <button onClick ={()=>prop.onClick(prop.name)}>Show</button></li></ul>
