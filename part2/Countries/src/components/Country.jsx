@@ -23,7 +23,7 @@ const Country = (prop) =>{
     },[prop.length, prop.capital])
 
 
-    if (prop.length < 10 && prop.length > 1){
+    if (prop.length <= 10 && prop.length > 1){
         return  <ul><li>{prop.name} <button onClick ={()=>prop.onClick(prop.name)}>Show</button></li></ul>
     }
 
@@ -31,9 +31,9 @@ const Country = (prop) =>{
         <>
             <h1>{prop.name}</h1>
             <h3>Capital </h3>{prop.capital.map(cap => <ul key ={cap}><li>{cap}</li></ul>)}
-            <h3>Area</h3> {prop.area}
+            <p><b>Area:</b> {prop.area}</p> 
             <h3>Languages </h3> {Object.values(prop.languages).map(lang => <ul key ={lang}><li>{lang}</li></ul>)}
-            <h3>Population: {prop.population}</h3>
+            <p><b>Population: </b>{prop.population}</p>
             <h1>{prop.flag}</h1>
             <h3>Weather in {prop.capital}</h3>
             <p>Temperature: {Math.round(Number(temp))+'\u00B0C'}</p>
