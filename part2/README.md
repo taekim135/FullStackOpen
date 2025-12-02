@@ -2,7 +2,7 @@
 This part covers more React & JS (data collection, mapping, controlled compo, data from server, adding styles to React)
 <br/>
 #### Start Date: Nov 15 2025
-#### End Date: NA
+#### End Date: Dec 1 2025
 <br/>
 
 #### Exercises:
