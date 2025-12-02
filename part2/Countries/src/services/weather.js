@@ -11,7 +11,6 @@ const getWeather = (city) =>{
     .catch(error =>{
         console.log('Failed to fetch weather from '+ city, error);
     })
-
 }
 
 
