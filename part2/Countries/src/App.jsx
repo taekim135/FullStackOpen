@@ -56,7 +56,6 @@ function App() {
     <>
       <p>Find Countries:<input type = "text" onChange={handleSearch}></input></p>
       <CountryList list = {filteredCountries} length = {filteredCountries.length} onClick = {detail}/>
-      
     </>
   )
 }
