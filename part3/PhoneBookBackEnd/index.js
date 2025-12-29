@@ -1,8 +1,13 @@
+require("dotenv").config()
+
 const express = require("express") // import express library
 const morgan = require("morgan") // HTTP request logger middleware for node.js
 const app = express() // express application instance (object)
+const Phone = require("./models/phoneDB")
+
 app.use(express.json()) // allows auto parsing of json @ incoming request - Content-Type: application/json
 app.use(express.static('dist')) //grab static files from frontend
+
 
 
 // token = placeholder
@@ -51,7 +56,9 @@ let contacts = [
 
 
 app.get("/api/persons", (request,response) =>{
-    response.json(contacts)
+    Phone.find({}).then(contacts =>{
+        response.json(contacts)
+    })
 })
 
 app.get("/api/persons/:id",(request,response) =>{
@@ -87,35 +94,36 @@ app.delete("/api/persons/:id", (request,response)=>{
 
 app.post("/api/persons", (request, response) =>{
     const details = request.body
-    const id = Math.random()
 
     if (!details || details.num == "" || details.name == "") {
         return response.status(400).json({
             "error": "Missing fields"
-        }).end()
-    }else if(contacts.find(person => person.name === details.name)){
-        return response.status(400).json({
-            "error": "Contact already exists "
-        }).end()
+        })
+        .end()
+    }else {
+        Phone.find(details.name).then(result =>{
+                    return response.status(400).json({
+                            "error": "Contact already exists"
+                        }).end()
+                    }
+                )
     }
 
-   //console.log(newPerson);
+    const newContact = new Phone({
+            name: details.name, 
+            number: details.number
+        }
+    )
 
-    const newPerson = {
-        "id": id,
-        "name": details.name, 
-        "number": details.number
-    }
-
-    contacts = contacts.concat(newPerson)
-
-    console.log('new contact added');
-    response.json(newPerson)
+    newContact.save().then(savedContact =>{
+        console.log('new contact added to DB');
+        response.json(savedContact)
+    })
 })
 
 
 
-const port = 3001
+const port = process.env.PORT
 app.listen(port, ()=>{
     console.log(`Server started on http://localhost:${port}`);
 })
