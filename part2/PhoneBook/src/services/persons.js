@@ -29,7 +29,7 @@ const remove = (id) =>{
 
 
 const update = (id, newNum) =>{
-    const request = axios.patch(url + "/" + id, {number:newNum})
+    const request = axios.put(url + "/" + id, {number:newNum})
     return request.then(updated => updated.data)
 }
 
