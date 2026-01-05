@@ -10,5 +10,9 @@
 #### Same port 3001 using npm run build & dist folder
 #### npm run start to start the server @ backend
 #### add proxy in frontend package.json to "http://localhost:3001" to keep the origins the same
-#### Do not implement the functionality for making changes to the phone numbers yet, that will be implemented in exercise 3.17.
 
+# Exercises 3.12 - 3.22: Backend to work with MongoDB database
+#### MongoDB & Mongoose integration
+#### Deploying to Render with MongoDB Atlas
+#### Environment variables for sensitive data
+#### Validation & ESLinting
