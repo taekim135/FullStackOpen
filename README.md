@@ -7,4 +7,5 @@ Each part of the course is stored in its own folder
 • Part 0 Completed (Oct 2025) <br />
 • Part 1 Completed (Nov 2025) <br />
 • Part 2 Completed (Nov 2025) <br />
-• Currently working on Part 3 <br />
+• Part 3 Completed (Jan 2026) <br />
+• Currently working on Part 4 <br />
