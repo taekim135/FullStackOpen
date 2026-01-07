@@ -22,6 +22,7 @@ const phoneSchema = new mongoose.Schema({
     },
     number: {
         type: "String",
+        minLength: [8, "Phone number should be 8 or more digits"],
         validate: {
             validator: function(v) {
                 return /\d{2}-/.test(v)
