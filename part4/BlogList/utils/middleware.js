@@ -18,12 +18,12 @@ const requestLogger = (request, response, next) => {
     logger.info('Method:', request.method)
     logger.info('Path:  ', request.path)
     logger.info('Body:  ', request.body)
-    logger.info('---')
+    logger.info('----------')
     next()
 }
 
-const unknownPoint = (request, response) => {
+const unknownEndPoint = (request, response) => {
     response.status(404).send({error :"Unknown Endpoint"})
 }
 
-module.exports = {errorHandler, requestLogger, unknownPoint}
+module.exports = {errorHandler, requestLogger, unknownEndPoint}
