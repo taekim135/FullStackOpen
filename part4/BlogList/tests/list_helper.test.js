@@ -3,16 +3,9 @@ const assert = require('node:assert')
 const listHelper = require('../utils/list_helper')
 
 
-test('dummy returns one', () => {
-  const blogs = []
 
-  const result = listHelper.dummy(blogs)
-  assert.strictEqual(result, 1)
-})
-
-
-describe("Total Likes ", ()=>{
-    const blogs = [
+// sample data for testing
+const blogs = [
   {
     _id: "5a422a851b54a676234d17f7",
     title: "React patterns",
@@ -62,20 +55,29 @@ describe("Total Likes ", ()=>{
     __v: 0
   }  
     ]
-    const listWithOneBlog = [
-    {
-      _id: '5a422aa71b54a676234d17f8',
-      title: 'Go To Statement Considered Harmful',
-      author: 'Edsger W. Dijkstra',
-      url: 'https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf',
-      likes: 5,
-      __v: 0
-    }
-    ]
-    const emptyBlog = []
+const listWithOneBlog = [
+{
+  _id: '5a422aa71b54a676234d17f8',
+  title: 'Go To Statement Considered Harmful',
+  author: 'Edsger W. Dijkstra',
+  url: 'https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf',
+  likes: 5,
+  __v: 0
+}
+]
+const emptyBlog = []
 
 
-    test("when list has only one blog equls the likes of that", () => {
+test('dummy returns one', () => {
+  const blogs = []
+
+  const result = listHelper.dummy(blogs)
+  assert.strictEqual(result, 1)
+})
+
+
+describe("Total Likes ", ()=>{
+    test("when list has only one blog equals the likes of that", () => {
         const actual = listHelper.totalLikes(listWithOneBlog)
         assert.strictEqual(actual,5)
     })
@@ -89,5 +91,25 @@ describe("Total Likes ", ()=>{
         const actual = listHelper.totalLikes(blogs)
         assert.strictEqual(actual,36)
     })
+})
 
+
+describe("Favorite Blog", () => {
+  test("when list has only one blog equals the likes of that", () => {
+        const actual = listHelper.favoriteBlog(listWithOneBlog)
+        const expected = listWithOneBlog[0]
+        assert.deepStrictEqual(actual, expected)
+    })
+
+    test("of an empty list should be 0", () => {
+        const actual = listHelper.favoriteBlog(emptyBlog)
+        const expected = emptyBlog[0]
+        assert.deepStrictEqual(actual, expected)
+    })
+
+    test("of a bigger list is calculated right", () => {
+        const actual = listHelper.favoriteBlog(blogs)
+        const expected = blogs[2]
+        assert.deepStrictEqual(actual,expected)
+    })
 })
