@@ -2,3 +2,10 @@
 #### npm project setup & MongoDB connection.
 #### files organized into models, controllers, utils
 
+# Exercises 4.3 - 4.7: Blogs Backend
+#### helper functions & unit testing
+
+# Exercises 4.8 - 4.12: Blogs Backend
+#### runnning tests
+#### async/await
+#### supertest for HTTP testing
