@@ -2,11 +2,16 @@
 // no more stright up console.log -> all sent here
 
 const info = (...params) => {
-    console.log(...params)
+    if (process.env.NODE_ENV !== "test"){
+        console.log(...params)
+    }
 }
+    
 
 const error = (...params) => {
-    console.error(...params)
+    if (process.env.NODE_ENV !== "test"){
+        console.error(...params)
+    }
 }
 
 module.exports = {info, error}
