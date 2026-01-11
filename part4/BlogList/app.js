@@ -13,7 +13,11 @@ app.use(express.json())
 // connection url
 mongoose.connect(config.mongoUrl, { family: 4 })
     .then(() => {
-        logger.info("Connected to Blog MongoDB")
+        if (config.mongoUrl.includes("TestBlog")){
+            logger.info("Connected to TestBlog MongoDB")
+        }else{
+            logger.info("Connected to Blog MongoDB")
+        }
     })
     .catch(error => {
         logger.error("Error connecting to Blog MongoDB:", error.message)

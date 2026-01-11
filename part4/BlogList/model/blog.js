@@ -3,10 +3,10 @@
 const mongoose = require("mongoose")
 
 const blogSchema = mongoose.Schema({
-    title: String,
+    title: {type: String, required: true},
     author: String,
-    url: String,
-    likes: Number
+    url: {type: String, required: true},
+    likes: {type: String, default: 0}
 })
 
 // format data output
