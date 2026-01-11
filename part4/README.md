@@ -9,3 +9,8 @@
 #### runnning tests
 #### async/await
 #### supertest for HTTP testing
+
+# Exercises 4.13 - 4.14: Blogs Backend Expansion
+#### delete & update blog posts
+#### add api routes for delete & update
+#### testing delete & update routes
