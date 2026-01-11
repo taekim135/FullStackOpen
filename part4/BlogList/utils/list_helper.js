@@ -102,11 +102,27 @@ const mostBlogs = (blogs) => {
   return _.maxBy(arrayForm, "blogs")
 }
 
-console.log(mostBlogs(blogs))
+const mostLikes = (blogs) => {
+  if (!blogs || blogs.length == 0) return 0
+
+  const authors = _.groupBy(blogs, "author")
+
+  // mapValues = obj, (key-value)
+  // authors = {'Edsger W. Dijkstra': [{ likes: 5 }, { likes: 12 }], 'Robert Martin': [{ likes: 10 }, { likes: 2 }]}
+  const likes = _.mapValues(authors, blog => _.sumBy(blog, "likes"))
+
+  const arrayForm = Object.entries(likes).map(([author,count]) => ({
+    author: author,
+    likes: count
+  }))
+
+  return _.maxBy(arrayForm, "likes")
+}
 
 module.exports = {
   dummy,
   totalLikes,
   favoriteBlog,
-  mostBlogs
+  mostBlogs,
+  mostLikes
 }
