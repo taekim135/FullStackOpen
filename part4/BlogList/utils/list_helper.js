@@ -59,8 +59,8 @@ const dummy = (blogs) => {
 }
 
 const totalLikes = (blogs) =>{
-  if (!blogs || blogs.length == 0) return null
-  
+  if (!blogs || blogs.length == 0) return 0
+
   let total = 0
 
   blogs.forEach(blog => {
@@ -71,7 +71,7 @@ const totalLikes = (blogs) =>{
 }
 
 const favoriteBlog = (blogs) => {
-  if (!blogs || blogs.length == 0) return null
+  if (!blogs || blogs.length == 0) return 0
 
   let best = blogs[0]
   
@@ -86,7 +86,7 @@ const favoriteBlog = (blogs) => {
 
 
 const mostBlogs = (blogs) => {
-  if (!blogs || blogs.length == 0) return null
+  if (!blogs || blogs.length == 0) return 0
 
   const counted = _.countBy(blogs, "author")
    
