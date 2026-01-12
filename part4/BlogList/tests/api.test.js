@@ -75,7 +75,7 @@ test("If likes property missing from request, auto set to 0", async () =>{
                     .expect('Content-Type', /application\/json/)
     // grab data from db
     const dataDB = await helper.getOneData(result.body.id)
-    assert.deepEqual(dataDB.likes, 0)
+    assert.strictEqual(dataDB.likes, 0)
 
 })
 
@@ -105,8 +105,6 @@ describe("Missing Fields test - 400 error", () => {
     })
 })
 
-//TODO: testing update
-
 test("Deleting one blog", async () => {
     const data = await helper.getDataFromDB()
     const sampleDataID = data[0].id
@@ -122,7 +120,20 @@ test("Deleting one blog", async () => {
 })
 
 
+test("Update one blog's likes", async () => {
+    const data = await helper.getDataFromDB()
+    const sampleDataID = data[0].id
 
+    const updated = await api.put(`/api/blogs/${sampleDataID}`)
+                            .send({likes: 1000})
+                            .expect(200)
+                            .expect('Content-Type', /application\/json/)
+    
+    // grab all ids from db after update api
+    const dataAfterUpdate = await helper.getOneData(sampleDataID)
+    assert.strictEqual(updated.body.likes, 1000)
+ 
+})
 
 
 after( async () => {
