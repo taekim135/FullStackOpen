@@ -3,7 +3,7 @@
 const app = require("../app")
 const supertest = require("supertest")
 const assert = require("assert")
-const {test, beforeEach, after} = require("node:test")
+const {test, beforeEach, after, describe} = require("node:test")
 const Blog = require("../model/blog")
 const mongoose = require("mongoose")
 const helper = require("./test_helper")
@@ -79,34 +79,56 @@ test("If likes property missing from request, auto set to 0", async () =>{
 
 })
 
+describe("Missing Fields test - 400 error", () => {
+    test("Missing title in new blog throws 400 error", async () =>{
+        const noTitlePost = {
+            "author": "John Doe",
+            "url": "www.testing.com",
+            "likes" : 10
+        }
+        const result1 = await api
+                        .post("/api/blogs")
+                        .send(noTitlePost)
+                        .expect(400)
+    })
 
-test("Missing title or url in new blog throws 400 error", async () =>{
-    const noTitlePost = {
-        "author": "John Doe",
-        "url": "www.testing.com",
-        "likes" : 10
-    }
-
-    const noURLPost ={
-        "title": "Missing URL",
-        "author": "John Doe",
-        "likes": 11
-    }
-
-    const result1 = await api
-                    .post("/api/blogs")
-                    .send(noTitlePost)
-                    .expect(400)
-
-    const result2 = await api
+    test("Missing URL field in new blog throws 400 error", async () => {
+        const noURLPost ={
+            "title": "Missing URL",
+            "author": "John Doe",
+            "likes": 11
+        }
+        const result2 = await api
                     .post("/api/blogs")
                     .send(noURLPost)
                     .expect(400)
-
+    })
 })
+
+//TODO: testing update
+
+test("Deleting one blog", async () => {
+    const data = await helper.getDataFromDB()
+    const sampleDataID = data[0].id
+
+    await api.delete(`/api/blogs/${sampleDataID}`).expect(204)
+
+    // grab all ids from db after deletion api
+    const dataAfterDel = await helper.getDataFromDB()
+    const ids = dataAfterDel.map(blogs => blogs.id)
+
+    assert(!ids.includes(sampleDataID))
+    assert.strictEqual(dataAfterDel.length, helper.initialBlogs.length - 1)
+})
+
+
 
 
 
 after( async () => {
     await mongoose.connection.close()
 })
+
+// npm test -- --test-only
+// running test with specific name/includes specific name
+// npm test -- --test-name-pattern="a specific note is within the returned notes"

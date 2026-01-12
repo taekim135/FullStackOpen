@@ -1,9 +1,11 @@
 // grabbing data from db
 // const response = await api.get('/api/notes')
 // to avoid above line repeating
+// keeps the test file clean
 const Blog = require('../model/blog')
 
 
+// sample data for testing
 const initialBlogs = [
   {
     _id: "5a422a851b54a676234d17f7",
