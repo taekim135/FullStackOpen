@@ -21,3 +21,15 @@ userRouter.post("/", async (request,response) => {
     
     response.status(201).json(savedUser)
 })
+
+
+// ruturn all users in DB
+userRouter.get("/", async (request,response) =>{
+    const users = await User.find({})
+
+    response.json(users)
+})
+
+module.exports = userRouter
+
+

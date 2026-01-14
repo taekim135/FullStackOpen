@@ -14,3 +14,9 @@
 #### delete & update blog posts
 #### add api routes for delete & update
 #### testing delete & update routes
+
+
+# Exercises 4.15 - 4.23: Blogs Backend Expansion
+#### user accounts
+#### user model & password hashing
+#### user controller & routes
