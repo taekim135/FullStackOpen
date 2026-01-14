@@ -3,6 +3,7 @@
 // to avoid above line repeating
 // keeps the test file clean
 const Blog = require('../model/blog')
+const User = require("../model/user")
 
 
 // sample data for testing
@@ -57,6 +58,39 @@ const initialBlogs = [
   }  
 ]
 
+const initialUsers = [
+  {
+    _id: "6967021af48550d27d84c679",
+    username: "Tester1",
+    name: "Me",
+    passwordHash: "$2b$10$4aLMy6JTtam257HIkB4rsOVUcddsQARBUVNpTBUreMZgOSoIHFk02",
+    __v: 0
+  },
+  {
+    _id: "6967025ff48550d27d84c67b",
+    username: "Tester2",
+    name: "You",
+    passwordHash: "$2b$10$x4Pved4j.ndHZGklmPhbOePRJ9TYpFUa0Xh6kYxRbdCzVkFQAmJNm",
+    __v: 0
+  },
+  {
+    _id: "696770609d1936a3b5837f33",
+    username: "Tester3",
+    name: "Him",
+    passwordHash: "$2b$10$PqwRQu1rsedQiaNV7xRvSeL/gwJJqT.sqipGOQDc8F37My3f26/Cy",
+    __v: 0
+  },
+  {
+    _id: "6967706e9d1936a3b5837f35",
+    username: "Tester5",
+    name: "Her",
+    passwordHash: "$2b$10$/vg2Sl.86hNapTBgw334J.KN/5wLqYBbevXj8ROWb/DN6y6aYsoRe",
+    __v: 0
+  }
+]
+
+
+
 
 const getDataFromDB = async () => {
     const data = await Blog.find({})
@@ -70,9 +104,23 @@ const getOneData = async (id) => {
 }
 
 
+const getUsersFromDB = async() => {
+  const data = await User.find({})
+
+  return data.map(user => user.toJSON())
+}
+
+const getOneUser = async (id) => {
+    const data = await User.findById(id)
+    return data
+}
+
 
 module.exports = {
   initialBlogs,
   getDataFromDB,
-  getOneData
+  getOneData,
+  initialUsers,
+  getUsersFromDB,
+  getOneUser
 }
