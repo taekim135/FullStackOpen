@@ -8,6 +8,13 @@ const bcrypt = require("bcrypt")
 userRouter.post("/", async (request,response) => {
     const {username, name, password} = request.body
 
+    // check password validation here
+    // db password is hashed thus not mongoose validation friendly
+    if (password.length < 3){
+        response.status(400).json({error: "password not long enough"})
+    }
+
+
     const salt = 10;
     const hashedPW = await bcrypt.hash(password, salt)
 
@@ -27,7 +34,7 @@ userRouter.post("/", async (request,response) => {
 userRouter.get("/", async (request,response) =>{
     const users = await User.find({})
 
-    response.json(users)
+    response.status(200).json(users)
 })
 
 module.exports = userRouter
