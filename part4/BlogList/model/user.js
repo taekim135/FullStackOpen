@@ -11,7 +11,8 @@ const userSchema = new mongoose.Schema({
     'passwordHash': String,
     "blogs": [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Blog"
+        // reference to model (not file name, but export name)
+        ref: "Blogs"
     }]
 })
 

@@ -2,6 +2,7 @@
 const User = require("../model/user")
 const userRouter = require("express").Router()
 const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken")
 
 
 // create new user to DB
@@ -32,11 +33,9 @@ userRouter.post("/", async (request,response) => {
 
 // ruturn all users in DB
 userRouter.get("/", async (request,response) =>{
-    const users = await User.find({})
+    const users = await User.find({}).populate("blogs", {url:1, title: 1, author: 1, id: 1})
 
     response.status(200).json(users)
 })
 
 module.exports = userRouter
-
-
