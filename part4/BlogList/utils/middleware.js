@@ -1,6 +1,7 @@
 // custom middleware
 // errorhandler, request logger, unknown endpoint
 const logger = require("../utils/logger")
+const jwt = require("jsonwebtoken")
 
 const errorHandler = (error, request, response, next) => {
     logger.error(error.message)
@@ -11,8 +12,31 @@ const errorHandler = (error, request, response, next) => {
         response.status(400).send({"error" : "malformatted id"})
     }else if (error.name === 'MongoServerError' && error.message.includes('E11000 duplicate key error')) {
         response.status(400).json({ error: 'expected `username` to be unique' })
-    }
+    }else if (error.name === "JsonWebTokenError")
     next(error)
+}
+
+
+const tokenExtractor = (request, response, next) => {
+  const authorization = request.get("authorization")
+
+  if (authorization && authorization.startsWith("Bearer")){
+    const Extractedtoken =  authorization.replace("Bearer ", "")
+    // do not send the token as it will end the request
+    // route will never run .post() if so
+    // Middleware = ingredients prepping:
+    // Extracts ingredients (token)
+    // Puts them on the counter (request object)
+    // Says "ready for the chef!" (calls next())
+
+    // Route handler = chef:
+    // Takes the ingredients (request.token)
+    // Cooks the dish (creates blog)
+    // Serves it (response.json())
+    request.token = Extractedtoken
+  }
+
+  next()
 }
 
 const requestLogger = (request, response, next) => {
@@ -27,4 +51,4 @@ const unknownEndPoint = (request, response) => {
     response.status(404).send({error :"Unknown Endpoint"})
 }
 
-module.exports = {errorHandler, requestLogger, unknownEndPoint}
+module.exports = {errorHandler, requestLogger, unknownEndPoint, tokenExtractor}

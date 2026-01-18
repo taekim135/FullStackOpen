@@ -3,6 +3,8 @@
 const blogRouter = require('express').Router()
 const Blog = require("../model/blog")
 const User = require("../model/user")
+const jwt = require("jsonwebtoken")
+
 
 
 blogRouter.get('/', async (request, response) => {
@@ -11,22 +13,34 @@ blogRouter.get('/', async (request, response) => {
 })
 
 blogRouter.post('/', async (request, response) => {
-  const linkedUser = await User.find({})
+  const decodedToken = jwt.verify(request.token, process.env.SECRET)
+
+  if (!decodedToken){
+    response.status(401).json({error: "Invalid Token"})
+  }
+
+  const postWriter = await User.findById(decodedToken.id)
+
+  if (!postWriter){
+    response.status(400).json({error: "User not found in DB"})
+  }
+
+
+  console.log("Person: ", postWriter);
 
   const newData = new Blog({
     title: request.body.title,
     author: request.body.author,
     url: request.body.url,
     likes: request.body.likes,
-    id: request.body.id,
-    user: linkedUser[0]._id
+    user: postWriter._id
   })
 
   const result = await newData.save()
   console.log('Data saved to Blog DB')
 
-  linkedUser[0].blogs = linkedUser[0].blogs.concat(result.id)
-  await linkedUser[0].save()
+  postWriter.blogs = postWriter.blogs.concat(result._id)
+  await postWriter.save()
 
   response.status(201).json(result)
 })
