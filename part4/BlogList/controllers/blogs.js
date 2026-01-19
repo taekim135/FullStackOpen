@@ -15,14 +15,15 @@ blogRouter.get('/', async (request, response) => {
 blogRouter.post('/', async (request, response) => {
   const decodedToken = jwt.verify(request.token, process.env.SECRET)
 
-  if (!decodedToken){
-    response.status(401).json({error: "Invalid Token"})
-  }
+  // not really needed as .verify() throws error
+  // if (!decodedToken){
+  //   response.status(401).json({error: "Invalid Token Error from .post()"})
+  // }
 
   const postWriter = await User.findById(decodedToken.id)
 
   if (!postWriter){
-    response.status(400).json({error: "User not found in DB"})
+    return response.status(401).json({error: "User not found in DB"})
   }
 
 
@@ -47,9 +48,22 @@ blogRouter.post('/', async (request, response) => {
 
 
 blogRouter.delete("/:id", async (request,response) => {
-  const data = await Blog.findByIdAndDelete(request.params.id)
-  console.log('Data deleted')
-  response.status(204).end()
+  const requesterToken = jwt.verify(request.token, process.env.SECRET)
+
+  // verify the delete requester
+  const requester = await User.findById(requesterToken.id)
+  const blogToDelete = await Blog.findById(request.params.id)
+
+  if (!blogToDelete.user){
+    return response.status(404).send({error: "Deletion Failed - Invalid User"})
+  }
+
+  if (blogToDelete.user.toString() === requester.id.toString()){
+    const deletedBlog = await Blog.findByIdAndDelete(request.params.id)
+
+    response.status(204).end()
+    console.log('Data deleted')
+  }
 })
 
 // update # likes of a post
@@ -62,7 +76,5 @@ blogRouter.put("/:id", async (request,response) => {
   response.json(updated)
 })
 
-
-//TODO: update
 
 module.exports = blogRouter
