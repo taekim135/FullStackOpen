@@ -1,7 +1,6 @@
 // custom middleware
 // errorhandler, request logger, unknown endpoint
 const logger = require("../utils/logger")
-const jwt = require("jsonwebtoken")
 
 const errorHandler = (error, request, response, next) => {
     logger.error(error.message)
