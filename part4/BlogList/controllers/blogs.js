@@ -6,13 +6,12 @@ const User = require("../model/user")
 const jwt = require("jsonwebtoken")
 
 
-
 blogRouter.get('/', async (request, response) => {
   const blogs = await Blog.find({}).populate("user", "username name id")
   response.json(blogs)
 })
 
-blogRouter.post('/', async (request, response) => {
+blogRouter.post('/', userExtractor, async (request, response) => {
   const decodedToken = jwt.verify(request.token, process.env.SECRET)
 
   // not really needed as .verify() throws error
