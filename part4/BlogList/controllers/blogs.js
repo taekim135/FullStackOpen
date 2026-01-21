@@ -4,6 +4,7 @@ const blogRouter = require('express').Router()
 const Blog = require("../model/blog")
 const User = require("../model/user")
 const jwt = require("jsonwebtoken")
+const { userExtractor } = require('../utils/middleware')
 
 
 blogRouter.get('/', async (request, response) => {
@@ -12,35 +13,28 @@ blogRouter.get('/', async (request, response) => {
 })
 
 blogRouter.post('/', userExtractor, async (request, response) => {
-  const decodedToken = jwt.verify(request.token, process.env.SECRET)
-
   // not really needed as .verify() throws error
   // if (!decodedToken){
   //   response.status(401).json({error: "Invalid Token Error from .post()"})
   // }
 
-  const postWriter = await User.findById(decodedToken.id)
-
-  if (!postWriter){
+  if (!request.user){
     return response.status(401).json({error: "User not found in DB"})
   }
-
-
-  console.log("Person: ", postWriter);
 
   const newData = new Blog({
     title: request.body.title,
     author: request.body.author,
     url: request.body.url,
     likes: request.body.likes,
-    user: postWriter._id
+    user: request.user._id
   })
 
   const result = await newData.save()
   console.log('Data saved to Blog DB')
 
-  postWriter.blogs = postWriter.blogs.concat(result._id)
-  await postWriter.save()
+  request.user.blogs = request.user.blogs.concat(result._id)
+  await request.user.save()
 
   response.status(201).json(result)
 })
@@ -61,7 +55,7 @@ blogRouter.delete("/:id", async (request,response) => {
     const deletedBlog = await Blog.findByIdAndDelete(request.params.id)
 
     response.status(204).end()
-    console.log('Data deleted')
+    console.log('Data deleted!')
   }
 })
 
