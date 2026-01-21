@@ -12,13 +12,13 @@ const errorHandler = (error, request, response, next) => {
     }else if (error.name === "CastError"){
         response.status(400).send({"error" : "malformatted id"})
     }else if (error.name === 'MongoServerError' && error.message.includes('E11000 duplicate key error')) {
-        response.status(400).json({ error: 'expected `username` to be unique' })
+        response.status(400).json({ "error": 'expected `username` to be unique' })
     }else if (error.name === "JsonWebTokenError"){
-        response.status(401).json({ error: 'Invalid Token' })
+        response.status(401).json({ "error": 'Invalid Token' })
     }else if (error.name === "TokenExpiredError"){
-        response.status(401).json({ error: 'Token Expired' })
+        response.status(401).json({ "error": 'Token Expired' })
     }
-    response.status(500).json({ error: 'Internal Server Error' })
+    response.status(500).json({ "error": 'Internal Server Error' })
 
     next(error)
 }
@@ -49,9 +49,10 @@ const userExtractor = async (request, response, next) => {
     const decodedToken = jwt.verify(request.token, process.env.SECRET)
 
     if (!decodedToken.id){
-        return response.status(401).send({error: "User ID not Found"})
+        return response.status(401).send({error: "User ID not Found in the request"})
     }
     request.user = await User.findById(decodedToken.id)
+    next()
 }
 
 const requestLogger = (request, response, next) => {
