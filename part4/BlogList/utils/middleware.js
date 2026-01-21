@@ -1,6 +1,8 @@
 // custom middleware
 // errorhandler, request logger, unknown endpoint
 const logger = require("../utils/logger")
+const jwt = require("jsonwebtoken")
+const User = require("../model/user")
 
 const errorHandler = (error, request, response, next) => {
     logger.error(error.message)
@@ -16,6 +18,8 @@ const errorHandler = (error, request, response, next) => {
     }else if (error.name === "TokenExpiredError"){
         response.status(401).json({ error: 'Token Expired' })
     }
+    response.status(500).json({ error: 'Internal Server Error' })
+
     next(error)
 }
 
@@ -38,8 +42,16 @@ const tokenExtractor = (request, response, next) => {
     // Serves it (response.json())
     request.token = Extractedtoken
   }
-
   next()
+}
+
+const userExtractor = async (request, response, next) => {
+    const decodedToken = jwt.verify(request.token, process.env.SECRET)
+
+    if (!decodedToken.id){
+        return response.status(401).send({error: "User ID not Found"})
+    }
+    request.user = await User.findById(decodedToken.id)
 }
 
 const requestLogger = (request, response, next) => {
@@ -54,4 +66,4 @@ const unknownEndPoint = (request, response) => {
     response.status(404).send({error :"Unknown Endpoint"})
 }
 
-module.exports = {errorHandler, requestLogger, unknownEndPoint, tokenExtractor}
+module.exports = {errorHandler, requestLogger, unknownEndPoint, tokenExtractor, userExtractor}
