@@ -2,8 +2,6 @@
 
 const blogRouter = require('express').Router()
 const Blog = require("../model/blog")
-const User = require("../model/user")
-const jwt = require("jsonwebtoken")
 const { userExtractor } = require('../utils/middleware')
 
 
@@ -40,23 +38,25 @@ blogRouter.post('/', userExtractor, async (request, response) => {
 })
 
 
-blogRouter.delete("/:id", async (request,response) => {
-  const requesterToken = jwt.verify(request.token, process.env.SECRET)
+blogRouter.delete("/:id", userExtractor, async (request,response) => {
 
   // verify the delete requester
-  const requester = await User.findById(requesterToken.id)
   const blogToDelete = await Blog.findById(request.params.id)
 
-  if (!blogToDelete.user){
-    return response.status(404).send({error: "Deletion Failed - Invalid User"})
+  if (blogToDelete.user?.toString() !== request.user.id.toString()){
+    return response.status(401).send({error: "User not authorised to delete this blog"})
   }
 
-  if (blogToDelete.user.toString() === requester.id.toString()){
-    const deletedBlog = await Blog.findByIdAndDelete(request.params.id)
+  await Blog.findByIdAndDelete(request.params.id)
 
-    response.status(204).end()
-    console.log('Data deleted!')
-  }
+  // prevents any ghost blogs under user's blog field
+  request.user.blogs = request.user.blogs.filter(
+    blogId => blogId.toString() !== request.params.id
+  )
+  await request.user.save()
+
+  response.status(204).end()
+  console.log('Data deleted!')
 })
 
 // update # likes of a post
