@@ -17,6 +17,8 @@
 
 
 # Exercises 4.15 - 4.23: Blogs Backend Expansion
-#### user accounts
-#### user model & password hashing
-#### user controller & routes
+#### user account login & routing
+#### user model schema, password hashing, routing/controllers
+#### token-based authentication with JWT
+#### middleware for extracting token & user from requests
+#### protecting blog routes to require authentication
