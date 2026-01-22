@@ -55,7 +55,17 @@ const initialBlogs = [
     url: "http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html",
     likes: 2,
     __v: 0
-  }  
+  },
+  {
+    _id: "5a422bc61b54a676234d17fd",
+    title: "Sample Data for Deletion Test",
+    author: "John Doe",
+    url: "www.testing.com",
+    likes: 6,
+    user: '6967021af48550d27d84c679',
+    __v: 0
+  }
+      
 ]
 
 const initialUsers = [
