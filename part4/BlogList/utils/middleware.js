@@ -17,10 +17,9 @@ const errorHandler = (error, request, response, next) => {
         response.status(401).json({ "error": 'Invalid Token' })
     }else if (error.name === "TokenExpiredError"){
         response.status(401).json({ "error": 'Token Expired' })
+    }else{
+        response.status(500).json({ "error": 'Internal Server Error' })
     }
-    response.status(500).json({ "error": 'Internal Server Error' })
-
-    next(error)
 }
 
 
@@ -48,7 +47,7 @@ const tokenExtractor = (request, response, next) => {
 const userExtractor = async (request, response, next) => {
     const decodedToken = jwt.verify(request.token, process.env.SECRET)
 
-    if (!decodedToken.id){
+    if (!decodedToken?.id){
         return response.status(401).send({error: "User ID not Found in the request"})
     }
     request.user = await User.findById(decodedToken.id)
