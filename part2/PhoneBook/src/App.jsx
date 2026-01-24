@@ -65,6 +65,9 @@ const App = () => {
             setNotify("")
           }, 3500)
         })
+        .catch(error =>{
+          setNotify(error.response.data.error)
+        })
 
       }else{
         // ask if need to be updated. If not, notify them that the user exists
