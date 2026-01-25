@@ -11,11 +11,6 @@ blogRouter.get('/', async (request, response) => {
 })
 
 blogRouter.post('/', userExtractor, async (request, response) => {
-  // not really needed as .verify() throws error
-  // if (!decodedToken){
-  //   response.status(401).json({error: "Invalid Token Error from .post()"})
-  // }
-
   if (!request.user){
     return response.status(401).json({error: "User not found in DB"})
   }
