@@ -3,6 +3,9 @@ import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from "./services/login"
 import Notification from "./components/Notification"
+import LoginForm from './components/LoginForm'
+import BlogForm from './components/BlogForm'
+import Togglable from './components/Togglable'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -40,10 +43,15 @@ const App = () => {
     }
   }
 
+
+  //TODO: login form & blog form but auto login
+
   // .clear() if want all local storage gone
   const handleLogout = () => {
-    window.localStorage.removeItem("LoggedInUser")
+    window.localStorage.clear()
     setUser(null)
+    setUsername("")
+    setPassword("")
     setNotification("Good Bye!")
       setTimeout(() => {
         setNotification(null) 
@@ -73,25 +81,32 @@ const App = () => {
     
   }
 
-  const blogForm = () => (
+  const loginForm = () => {
+    <Togglable buttonLabel="Login">
+      <LoginForm
+        handleSubmit={handleLogin}
+        handleUsernameChange={({target}) => setUsername(target.value)}
+        handlePasswordChange={({target}) => setUsername(target.value)}
+        username = {username}
+        password={password}
+      />
+    </Togglable>
+  }
 
-    <form onSubmit={addPost}>
-      <label>
-        Title:
-        <input type="text" value = {title} onChange={({target})=>{setTitle(target.value)}} required/><br/>
-      </label>
-      <label>
-        Author:
-        <input type="text" value = {author} onChange={({target})=>{setAuthor(target.value)}} required/><br/>
-      </label>
-      <label>
-        URL:
-        <input type="text" value = {url} onChange={({target})=>{setUrl(target.value)}} required/><br/>
-      </label>
-      <button type="submit">Create</button>
-    </form>
+  const blogForm = () => {
+    <Togglable buttonLabel="New Blog">
+      <BlogForm
+        onSubmit={addPost}
+        title = {title}
+        author ={author}
+        url ={url}
+        handleTitleChange={({target}) => setTitle(target.value) }
+        handleAuthorChange={({target}) => setAuthor(target.value)}
+        handleUrlChange= {({target}) => setUrl(target.value)}
+      />
+  </Togglable>
+  }
 
-  )
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -111,39 +126,17 @@ const App = () => {
   }, [])
 
 
-  //blogForm
-  if (user === null){
-    return (
-      <div>
-        <h2>Part 5 - Blogs Login Page</h2>
-          <Notification message = {notification}></Notification>
-          <form onSubmit={handleLogin}>
-          <div>
-            <label>
-              username
-              <input type = "text" value = {username} onChange = {({ target }) => setUsername(target.value)}/>
-            </label>
-          </div>
-          <div>
-            <label>
-              password
-              <input type = "password" value = {password} onChange = {({ target }) => setPassword(target.value)}/>
-            </label>
-          </div>
-          <button type="submit">Login</button>
-        </form>
-      </div>
-    )
-  }
+  if (user === null)(
+    loginForm()
+  )
 
   return (
     <div>
       <h2>Part 5 - Blogs Frontend</h2>
       <Notification message = {notification}></Notification>
-      <h4>Welcome, {user.name}
+      <h4>Welcome, 
         <button type = "submit" onClick ={handleLogout}>Logout</button>
       </h4>
-      <h3>Create New Blog</h3>
       {blogForm()}
       <br/>
       {blogs.map(blog =>
