@@ -6,8 +6,13 @@ import loginService from "./services/login"
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [user, setUser]= useState(null)
+  
   const [username, setUsername] = useState("")
   const [password,setPassword] = useState("")
+  const [title, setTitle] = useState("")
+  const [author, setAuthor] = useState("")
+  const [url, setUrl] = useState("")
+
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -16,6 +21,9 @@ const App = () => {
       const user = await loginService.login({username, password})
       setUser(user)
       blogService.setToken(user.token)
+
+      window.localStorage.setItem("LoggedInUser", JSON.stringify(user))
+
       setUsername("")
       setPassword("")
     }catch{
@@ -23,6 +31,47 @@ const App = () => {
     }
   }
 
+  // .clear() if want all local storage gone
+  const handleLogout = async () => {
+    window.localStorage.removeItem("LoggedInUser")
+    setUser(null)
+  }
+
+  const addPost = async (event) => {
+    event.preventDefault()
+
+    const newBlog = {
+      title: title,
+      author: author,
+      url: url
+    }
+
+    const posted = await blogService.postBlog(newBlog)
+    setBlogs(blogs.concat(posted))
+    setTitle("")
+    setAuthor("")
+    setUrl("")
+  }
+
+  const blogForm = () => (
+
+    <form onSubmit={addPost}>
+      <label>
+        Title:
+        <input type="text" value = {title} onChange={({target})=>{setTitle(target.value)}} required/><br/>
+      </label>
+      <label>
+        Author:
+        <input type="text" value = {author} onChange={({target})=>{setAuthor(target.value)}} required/><br/>
+      </label>
+      <label>
+        URL:
+        <input type="text" value = {url} onChange={({target})=>{setUrl(target.value)}} required/><br/>
+      </label>
+      <button type="submit">Create</button>
+    </form>
+
+  )
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -30,6 +79,20 @@ const App = () => {
     )  
   }, [])
 
+
+  // when rendering the page for 1st time, check if user details are saved in browser local storage
+  useEffect(() => {
+    const loggedUser = window.localStorage.getItem("LoggedInUser")
+    if (loggedUser){
+      const userDetails = JSON.parse(loggedUser)
+      setUser(userDetails)
+      blogService.setToken(userDetails.token)
+      console.log("Welcome Back! Local Storage")
+    }
+  }, [])
+
+
+  //noteForm
   if (user === null){
     return (
       <div>
@@ -56,7 +119,12 @@ const App = () => {
   return (
     <div>
       <h2>Part 5 - Blogs Frontend</h2>
-      <h4>Welcome, {user.name}</h4>
+      <h4>Welcome, {user.name}
+        <button type = "submit" onClick ={handleLogout}>Logout</button>
+      </h4>
+      <h3>Create New Blog</h3>
+      {blogForm()}
+      <br/>
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}
