@@ -2,11 +2,12 @@ import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from "./services/login"
+import Notification from "./components/Notification"
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [user, setUser]= useState(null)
-  
+  const [notification, setNotification] = useState(null)
   const [username, setUsername] = useState("")
   const [password,setPassword] = useState("")
   const [title, setTitle] = useState("")
@@ -26,15 +27,27 @@ const App = () => {
 
       setUsername("")
       setPassword("")
+
+      setNotification("Login Successful!")
+      setTimeout(() => {
+        setNotification(null) 
+      }, 5000)
     }catch{
-      console.log("Invalid credentials")
+      setNotification("Invalid username or password")
+      setTimeout(() => {
+        setNotification(null) 
+      }, 5000)
     }
   }
 
   // .clear() if want all local storage gone
-  const handleLogout = async () => {
+  const handleLogout = () => {
     window.localStorage.removeItem("LoggedInUser")
     setUser(null)
+    setNotification("Good Bye!")
+      setTimeout(() => {
+        setNotification(null) 
+      }, 5000)
   }
 
   const addPost = async (event) => {
@@ -48,9 +61,16 @@ const App = () => {
 
     const posted = await blogService.postBlog(newBlog)
     setBlogs(blogs.concat(posted))
+
+    setNotification(`Blog ${title} by ${author} Saved!`)
+    setTimeout(() => {
+      setNotification(null) 
+    }, 5000)
+
     setTitle("")
     setAuthor("")
     setUrl("")
+    
   }
 
   const blogForm = () => (
@@ -87,16 +107,16 @@ const App = () => {
       const userDetails = JSON.parse(loggedUser)
       setUser(userDetails)
       blogService.setToken(userDetails.token)
-      console.log("Welcome Back! Local Storage")
     }
   }, [])
 
 
-  //noteForm
+  //blogForm
   if (user === null){
     return (
       <div>
         <h2>Part 5 - Blogs Login Page</h2>
+          <Notification message = {notification}></Notification>
           <form onSubmit={handleLogin}>
           <div>
             <label>
@@ -119,6 +139,7 @@ const App = () => {
   return (
     <div>
       <h2>Part 5 - Blogs Frontend</h2>
+      <Notification message = {notification}></Notification>
       <h4>Welcome, {user.name}
         <button type = "submit" onClick ={handleLogout}>Logout</button>
       </h4>
