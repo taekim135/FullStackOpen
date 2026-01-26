@@ -4,8 +4,7 @@ const BlogForm = ({onSubmit,
                     url, 
                     handleTitleChange,
                     handleAuthorChange,
-                    handleUrlChange}) => {
-
+                    handleUrlChange}) => {         
     return(
         <div>
             <h3>Create New Blog</h3>
