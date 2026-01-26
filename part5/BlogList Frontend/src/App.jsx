@@ -13,11 +13,8 @@ const App = () => {
   const [notification, setNotification] = useState(null)
   const [username, setUsername] = useState("")
   const [password,setPassword] = useState("")
-  const [title, setTitle] = useState("")
-  const [author, setAuthor] = useState("")
-  const [url, setUrl] = useState("")
 
-
+  
   const handleLogin = async (event) => {
     event.preventDefault()
 
@@ -43,6 +40,17 @@ const App = () => {
     }
   }
 
+  const addPost = async (newNoteObject) => {
+    blogFormRef.current.toggleVisibility()
+
+    const posted = await blogService.postBlog(newNoteObject)
+    setBlogs(blogs.concat(posted))
+    setNotification(`Blog ${newNoteObject.title} by ${newNoteObject.author} Saved!`)
+    setTimeout(() => {
+    setNotification(null) 
+    }, 5000)
+  }
+
 
   // .clear() if want all local storage gone
   const handleLogout = () => {
@@ -55,29 +63,7 @@ const App = () => {
       }, 5000)
   }
 
-  const addPost = async (event) => {
-    event.preventDefault()
-    blogFormRef.current.toggleVisibility()
-
-    const newBlog = {
-      title: title,
-      author: author,
-      url: url
-    }
-
-    const posted = await blogService.postBlog(newBlog)
-    setBlogs(blogs.concat(posted))
-
-    setNotification(`Blog ${title} by ${author} Saved!`)
-    setTimeout(() => {
-      setNotification(null) 
-    }, 5000)
-
-    setTitle("")
-    setAuthor("")
-    setUrl("")
-    
-  }
+  
 
   const loginForm = () => (
     <Togglable buttonLabel="Login">
@@ -92,16 +78,8 @@ const App = () => {
   )
 
   const blogForm = () => (
-    <Togglable buttonLabel="New Blog" ref = {blogFormRef}>
-      <BlogForm
-        onSubmit={addPost}
-        title = {title}
-        author ={author}
-        url ={url}
-        handleTitleChange={({target}) => setTitle(target.value) }
-        handleAuthorChange={({target}) => setAuthor(target.value)}
-        handleUrlChange= {({target}) => setUrl(target.value)}
-      />
+    <Togglable buttonLabel = "New Blog" ref={blogFormRef}>
+      <BlogForm createPost = {addPost}/>
     </Togglable>
   )
 
