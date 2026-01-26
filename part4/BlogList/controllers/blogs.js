@@ -1,4 +1,5 @@
-// all routing
+// all routing related to blog posting
+// BACKEND
 
 const blogRouter = require('express').Router()
 const Blog = require("../model/blog")
