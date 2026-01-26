@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useImperativeHandle } from 'react'
 
 
 // acts like a wrapper component to hide/show whatever is between the tags
@@ -14,6 +14,10 @@ const Togglable = (props) => {
     setVisible(!visible)
   }
 
+  useImperativeHandle(props.ref, () => {
+    return {toggleVisibility}
+  })
+
   return (
     <div>
 
@@ -24,7 +28,7 @@ const Togglable = (props) => {
       {/* show children if visible */}
       <div style={showWhenVisible}>
         {props.children} {/*  <--- LoginForm rendered here */}
-        <button onClick={toggleVisibility}>cancel</button>
+        <button onClick={toggleVisibility}>Cancel</button>
       </div>
     </div>
   )
