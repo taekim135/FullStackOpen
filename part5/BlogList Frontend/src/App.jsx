@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from "./services/login"
@@ -44,14 +44,11 @@ const App = () => {
   }
 
 
-  //TODO: login form & blog form but auto login
-
   // .clear() if want all local storage gone
   const handleLogout = () => {
     window.localStorage.clear()
+    blogService.clearToken()
     setUser(null)
-    setUsername("")
-    setPassword("")
     setNotification("Good Bye!")
       setTimeout(() => {
         setNotification(null) 
@@ -60,6 +57,7 @@ const App = () => {
 
   const addPost = async (event) => {
     event.preventDefault()
+    blogFormRef.current.toggleVisibility()
 
     const newBlog = {
       title: title,
@@ -81,20 +79,20 @@ const App = () => {
     
   }
 
-  const loginForm = () => {
+  const loginForm = () => (
     <Togglable buttonLabel="Login">
       <LoginForm
         handleSubmit={handleLogin}
         handleUsernameChange={({target}) => setUsername(target.value)}
-        handlePasswordChange={({target}) => setUsername(target.value)}
+        handlePasswordChange={({target}) => setPassword(target.value)}
         username = {username}
         password={password}
       />
     </Togglable>
-  }
+  )
 
-  const blogForm = () => {
-    <Togglable buttonLabel="New Blog">
+  const blogForm = () => (
+    <Togglable buttonLabel="New Blog" ref = {blogFormRef}>
       <BlogForm
         onSubmit={addPost}
         title = {title}
@@ -104,16 +102,16 @@ const App = () => {
         handleAuthorChange={({target}) => setAuthor(target.value)}
         handleUrlChange= {({target}) => setUrl(target.value)}
       />
-  </Togglable>
-  }
+    </Togglable>
+  )
 
+  const blogFormRef = useRef()
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
     )  
   }, [])
-
 
   // when rendering the page for 1st time, check if user details are saved in browser local storage
   useEffect(() => {
@@ -125,20 +123,19 @@ const App = () => {
     }
   }, [])
 
-
-  if (user === null)(
-    loginForm()
-  )
-
   return (
     <div>
       <h2>Part 5 - Blogs Frontend</h2>
       <Notification message = {notification}></Notification>
-      <h4>Welcome, 
-        <button type = "submit" onClick ={handleLogout}>Logout</button>
-      </h4>
-      {blogForm()}
-      <br/>
+      {(!user && loginForm())}
+      {(user &&  (
+        <h4>Welcome, {user.name}
+          <button type = "submit" onClick ={handleLogout}>Logout</button>
+          <br/>
+          {blogForm()}
+        </h4>)
+      )}
+      
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}
