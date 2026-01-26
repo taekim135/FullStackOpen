@@ -51,7 +51,6 @@ const App = () => {
     }, 5000)
   }
 
-
   // .clear() if want all local storage gone
   const handleLogout = () => {
     window.localStorage.clear()
@@ -63,7 +62,7 @@ const App = () => {
       }, 5000)
   }
 
-  
+  //TODO: 5.7 
 
   const loginForm = () => (
     <Togglable buttonLabel="Login">
