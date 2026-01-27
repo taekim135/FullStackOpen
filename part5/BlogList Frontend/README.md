@@ -5,6 +5,7 @@
 
 # Exercises 5.5 - 5.11: Blogs Frontend
 #### login & blog posting into forms & display blogs when needed
-#### porps.children
+#### props.children
 #### form states
 #### component references
+#### updating certain blog (likes)
