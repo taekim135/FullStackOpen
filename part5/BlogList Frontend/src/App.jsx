@@ -53,7 +53,7 @@ const App = () => {
 
   const updateLike = async (id, likes) => {
     const updatedBlog = await blogService.updateLikes(id,likes)
-    setBlogs(blogs.map(blog => blog.id === updatedBlog.id ? updatedBlog : blog))
+    setBlogs(blogs.map(blog => blog.id === updatedBlog.id ? updatedBlog : blog).sort((blogA, blogB) => blogB.likes - blogA.likes))
   }
 
   // .clear() if want all local storage gone
@@ -89,7 +89,7 @@ const App = () => {
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
-      setBlogs( blogs )
+      setBlogs(blogs.sort((blogA, blogB) => blogB.likes - blogA.likes))
     )  
   }, [])
 
