@@ -24,11 +24,11 @@ const Blog = ({ blog, updateFunction}) => {
   return (
     <div style={blogStyle}>
       <div>
-        {blog.title} By {blog.author} <button onClick={handleDetail}>{showDetail ? "Cancel" : "Show"}</button>
+        {blog.title} By {blog.author} <button onClick={handleDetail}>{showDetail ? "Hide" : "Show"}</button>
       </div>
       {(showDetail && (
         <div>
-          {blog.url} <br/> {blog.likes} <button onClick={handleLike}>like</button> <br/> {blog.author}
+          {blog.url} <br/> {blog.likes} <button onClick={handleLike}>Like</button> <br/> {blog.author}
         </div>
       ))}
     </div>
