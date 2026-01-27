@@ -40,15 +40,20 @@ const App = () => {
     }
   }
 
-  const addPost = async (newNoteObject) => {
+  const addPost = async (newBlogObject) => {
     blogFormRef.current.toggleVisibility()
 
-    const posted = await blogService.postBlog(newNoteObject)
+    const posted = await blogService.postBlog(newBlogObject)
     setBlogs(blogs.concat(posted))
-    setNotification(`Blog ${newNoteObject.title} by ${newNoteObject.author} Saved!`)
+    setNotification(`Blog ${newBlogObject.title} by ${newBlogObject.author} Saved!`)
     setTimeout(() => {
     setNotification(null) 
     }, 5000)
+  }
+
+  const updateLike = async (id, likes) => {
+    const updatedBlog = await blogService.updateLikes(id,likes)
+    setBlogs(blogs.map(blog => blog.id === updatedBlog.id ? updatedBlog : blog))
   }
 
   // .clear() if want all local storage gone
@@ -61,8 +66,6 @@ const App = () => {
         setNotification(null) 
       }, 5000)
   }
-
-  //TODO: 5.7 
 
   const loginForm = () => (
     <Togglable buttonLabel="Login">
@@ -114,7 +117,7 @@ const App = () => {
       )}
       
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} updateFunction = {updateLike} />
       )}
     </div>
   )

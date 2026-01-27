@@ -24,4 +24,10 @@ const getAll = async () => {
   return response.data
 }
 
-export default { getAll, setToken, clearToken, postBlog }
+const updateLikes = async (id, newLikes) =>{
+  const body = {"likes": newLikes}
+  const response = await axios.put(`${baseUrl}/${id}`, body)
+  return response.data
+}
+
+export default { getAll, setToken, clearToken, postBlog, updateLikes }

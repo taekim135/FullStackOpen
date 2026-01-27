@@ -1,7 +1,6 @@
 import { useState } from "react"
-import blogService from '../services/blogs'
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, updateFunction}) => {
   const [showDetail, setShowDetail] = useState(false)
 
   const blogStyle = {
@@ -16,9 +15,11 @@ const Blog = ({ blog }) => {
     setShowDetail(!showDetail)
   }
 
-  const handleLike= () => {
-    
+  const handleLike = async () => {
+    updateFunction(blog.id, blog.likes+1)
   }
+
+  // TODO: work on like button 5.8 -> working but not updated automatically
 
   return (
     <div style={blogStyle}>
