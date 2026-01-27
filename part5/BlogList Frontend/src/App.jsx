@@ -94,6 +94,7 @@ const App = () => {
   }, [])
 
   // when rendering the page for 1st time, check if user details are saved in browser local storage
+  // prevents continuous login. refreshed or return = stays logged in
   useEffect(() => {
     const loggedUser = window.localStorage.getItem("LoggedInUser")
     if (loggedUser){
