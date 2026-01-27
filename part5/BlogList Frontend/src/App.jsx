@@ -58,7 +58,7 @@ const App = () => {
 
   // .clear() if want all local storage gone
   const handleLogout = () => {
-    window.localStorage.clear()
+    window.localStorage.removeItem("LoggedInUser")
     blogService.clearToken()
     setUser(null)
     setNotification("Good Bye!")
