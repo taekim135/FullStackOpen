@@ -8,4 +8,5 @@
 #### props.children
 #### form states
 #### component references
-#### updating certain blog (likes)
+#### updating & deleting certain blog (only if user is the creator)
+#### sorting blogs based on likes
