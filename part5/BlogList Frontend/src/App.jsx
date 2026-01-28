@@ -56,6 +56,19 @@ const App = () => {
     setBlogs(blogs.map(blog => blog.id === updatedBlog.id ? updatedBlog : blog).sort((blogA, blogB) => blogB.likes - blogA.likes))
   }
 
+  const deletePost = async (id) => {
+    const deletePostResult = await blogService.deletePost(id)
+
+    if (deletePostResult == ""){
+      setNotification("Blog Removed Successfullly!")
+      setBlogs(blogs.filter(blog => blog.id != id))
+
+      setTimeout(() => {
+        setNotification(null) 
+      }, 5000)
+    }
+  }
+
   // .clear() if want all local storage gone
   const handleLogout = () => {
     window.localStorage.removeItem("LoggedInUser")
@@ -116,9 +129,8 @@ const App = () => {
           {blogForm()}
         </h4>)
       )}
-      
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} updateFunction = {updateLike} />
+        <Blog key={blog.id} blog={blog} updateFunction = {updateLike} deleteFunction = {deletePost} requester={user} />
       )}
     </div>
   )
