@@ -1,3 +1,6 @@
+// API for frontend
+// User sends request to server using these blueprints
+
 import axios from 'axios'
 const baseUrl = '/api/blogs'
 
@@ -24,10 +27,17 @@ const getAll = async () => {
   return response.data
 }
 
+const deletePost = async (id) => {
+  const header = { headers: {"Authorization": token}}
+
+  const response = await axios.delete(`${baseUrl}/${id}`, header)
+  return response.data
+}
+
 const updateLikes = async (id, newLikes) =>{
   const body = {"likes": newLikes}
   const response = await axios.put(`${baseUrl}/${id}`, body)
   return response.data
 }
 
-export default { getAll, setToken, clearToken, postBlog, updateLikes }
+export default { getAll, setToken, clearToken, postBlog, updateLikes, deletePost }
