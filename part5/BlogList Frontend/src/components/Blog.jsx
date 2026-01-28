@@ -1,7 +1,8 @@
 import { useState } from "react"
 
-const Blog = ({ blog, updateFunction}) => {
+const Blog = ({ blog, updateFunction, deleteFunction, requester}) => {
   const [showDetail, setShowDetail] = useState(false)
+  const [isCreator, setIsCreator] = useState(false)
 
   const blogStyle = {
     paddingTop: 10,
@@ -13,13 +14,20 @@ const Blog = ({ blog, updateFunction}) => {
 
   const handleDetail = () => {
     setShowDetail(!showDetail)
+    if (blog.user?.username == requester.username){
+      setIsCreator(true)
+    }
   }
 
   const handleLike = async () => {
     updateFunction(blog.id, blog.likes+1)
   }
 
-  // TODO: work on like button 5.8 -> working but not updated automatically
+  const handleDelete = async () => {
+    if(window.confirm(`Remove Blog: "${blog.title}" by "${blog.author}"`)){
+      deleteFunction(blog.id)
+    }
+  }
 
   return (
     <div style={blogStyle}>
@@ -31,8 +39,10 @@ const Blog = ({ blog, updateFunction}) => {
           {blog.url} <br/> {blog.likes} <button onClick={handleLike}>Like</button> <br/> {blog.author}
         </div>
       ))}
+      {(isCreator && (
+        <button onClick ={handleDelete}> Delete </button>
+      ))}
     </div>
-
   )  
 }
 
