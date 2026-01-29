@@ -1,6 +1,6 @@
 const Notification = ({message}) => {
 
-    if (message == null || message == "" || !message){
+    if (message === null || message === "" || !message){
         return null
     }else if (message.includes("Invalid")){
         return (

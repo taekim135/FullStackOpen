@@ -43,7 +43,7 @@ const Blog = ({ blog, updateFunction, deleteFunction, requester}) => {
         <button onClick ={handleDelete}> Delete </button>
       ))}
     </div>
-  )  
+  )
 }
 
 export default Blog
