@@ -30,12 +30,12 @@ export default [
             ],
             indent: ["error", 4],
             "linebreak-style": ["error", "unix"],
-            quotes: ['error', 'double'],
-            semi: ['error', 'never'],
-            eqeqeq: 'error',
+            quotes: ["error", "double"],
+            semi: ["error", "never"],
+            eqeqeq: "error",
             "no-trailing-spaces": "error",
             "object-curly-spacing": ["error", "never"],
-            "arrow-spacing": ["error", { before: true, after: true }],
+            "arrow-spacing": ["error", {before: true, after: true}],
             "no-console": "off"
         }
     }
