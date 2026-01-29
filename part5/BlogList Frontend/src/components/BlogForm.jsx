@@ -1,23 +1,20 @@
-import { useState } from "react"
+import {useState} from "react"
 
 // just some function passed as para
-const BlogForm = ({createPost}) => {    
-                        
+const BlogForm = ({createPost}) => {
     const [title, setTitle] = useState("")
     const [author, setAuthor] = useState("")
     const [url, setUrl] = useState("")
 
-
     const addPost = async (event) => {
         event.preventDefault()
 
-        createPost({ title,  author, url })
+        createPost({title, author, url})
 
         setTitle("")
         setAuthor("")
         setUrl("")
     }
-
 
     return(
         <div>

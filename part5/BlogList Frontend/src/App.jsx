@@ -59,12 +59,12 @@ const App = () => {
   const deletePost = async (id) => {
     const deletePostResult = await blogService.deletePost(id)
 
-    if (deletePostResult == ""){
+    if (deletePostResult === ""){
       setNotification("Blog Removed Successfullly!")
-      setBlogs(blogs.filter(blog => blog.id != id))
+      setBlogs(blogs.filter(blog => blog.id !== id))
 
       setTimeout(() => {
-        setNotification(null) 
+        setNotification(null)
       }, 5000)
     }
   }
