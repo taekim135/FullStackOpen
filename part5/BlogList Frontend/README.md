@@ -9,4 +9,6 @@
 #### form states
 #### component references
 #### updating & deleting certain blog (only if user is the creator)
-#### sorting blogs based on likes
+
+# Exercises 5.12: Blogs Frontend
+#### ESLinting & code formatting
