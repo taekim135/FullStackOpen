@@ -9,7 +9,9 @@ export default [
         files: ["**/*.{js,jsx}"],
         languageOptions: {
             ecmaVersion: 2020,
-            globals: globals.vitest,
+            globals: {...globals.vitest, ...globals.browser},
+            // testing globals like test, expect, beforeEach.
+            //browser - codes that run in the web. document, window, console
             parserOptions: {
                 ecmaVersion: "latest",
                 ecmaFeatures: {jsx: true},
