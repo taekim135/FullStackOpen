@@ -16,4 +16,4 @@
 # Exercise 5.13- 5.16: Blogs Frontend
 #### React component testing with Jest & React Testing Library
 #### clicking buttons, filling forms
-#### .render(), screen, .findByText(), .getByText(), .userEvent
+#### .render(), screen, .findByText(), expect().toBeDefined(), .userEvent
