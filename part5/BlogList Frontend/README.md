@@ -10,5 +10,10 @@
 #### component references
 #### updating & deleting certain blog (only if user is the creator)
 
-# Exercises 5.12: Blogs Frontend
+# Exercise 5.12: Blogs Frontend
 #### ESLinting & code formatting
+
+# Exercise 5.13- 5.16: Blogs Frontend
+#### React component testing with Jest & React Testing Library
+#### clicking buttons, filling forms
+#### .render(), screen, .findByText(), .getByText(), .userEvent
