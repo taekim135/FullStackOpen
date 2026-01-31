@@ -53,7 +53,7 @@ test("Clicking Show button displays URL & #Likes ", async () => {
 })
 
 
-test.only("Clicking the like button twice = event handler received twice", async () => {
+test("Clicking the like button twice = event handler received twice", async () => {
     const likeHandler = vi.fn()
 
     render(<Blog updateFunction = {likeHandler} blog = {sampleBlog} requester = {sampleUser}> </Blog>)
