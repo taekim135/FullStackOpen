@@ -127,10 +127,9 @@ const App = () => {
                     <button type = "submit" onClick ={handleLogout}>Logout</button>
                     <br/>
                     {blogForm()}
+                    {blogs.map(blog =>
+                        <Blog key={blog.id} blog={blog} updateFunction = {updateLike} deleteFunction = {deletePost} requester={user} />)}
                 </h4>)
-            )}
-            {blogs.map(blog =>
-                <Blog key={blog.id} blog={blog} updateFunction = {updateLike} deleteFunction = {deletePost} requester={user} />
             )}
         </div>
     )
