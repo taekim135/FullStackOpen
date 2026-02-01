@@ -2,12 +2,6 @@ import BlogForm from "./BlogForm"
 import {render, screen} from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 
-const sampleUser = {
-    "token": "asdfasdf",
-    "name": "Me",
-    "username": "Tester1"
-}
-
 const sampleNewBlog = {
     "title": "Testing form",
     "author": "Tester1",
