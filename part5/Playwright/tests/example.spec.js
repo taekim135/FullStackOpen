@@ -1,5 +1,5 @@
 const { test, expect, beforeEach, describe } = require('@playwright/test')
-const {loginUser} = require("./testHelper")
+const {loginUser, createBlog} = require("./testHelper")
 
 // .only() runs automatically by playwright
 // all nee async/await for the pages to render first
@@ -41,7 +41,6 @@ describe('Blog app', () => {
 
   })
 
-  // logged in user can post new blog & able to see the new blog on the list
   describe('When logged in', () => {
     beforeEach(async ({ page }) => {
       await loginUser(page, "Tester1", "testtest")
@@ -49,20 +48,16 @@ describe('Blog app', () => {
 
     test('a new blog can be created', async ({ page }) => {
       await expect(page.getByRole("button", {name: "New Blog"})).toBeVisible()
-      await page.getByRole("button", {name: "New Blog"}).click()
 
-      await page.getByLabel("title").fill("Testing new blog using Playwright")
-      await page.getByLabel("author").fill("Tester1")
-      await page.getByLabel("url").fill("www.test.org")
-
-      await page.getByRole("button", {name: "Create"}).click()
+      await createBlog(page, "Testing new blog using Playwright", "Tester1", "www.test.org")
 
       await expect(page.getByText("Saved", {exact: false})).toBeVisible()
       await expect(page.locator(".pass")).toHaveCSS('color', 'rgb(0, 128, 0)')
     })
 
     test("the new blog shows up on the list", async ({page}) => {
-
+      await createBlog(page, "2nd test for new blog", "Tester1", "www.test2.org")
+      await expect(page.getByText("2nd test for new blog")).toBeVisible()
     })
   })
 
