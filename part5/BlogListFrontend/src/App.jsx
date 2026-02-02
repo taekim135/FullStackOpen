@@ -31,12 +31,12 @@ const App = () => {
             setNotification("Login Successful!")
             setTimeout(() => {
                 setNotification(null)
-            }, 5000)
+            }, 3000)
         }catch{
             setNotification("Invalid username or password")
             setTimeout(() => {
                 setNotification(null)
-            }, 5000)
+            }, 3000)
         }
     }
 
@@ -48,7 +48,7 @@ const App = () => {
         setNotification(`Blog ${newBlogObject.title} by ${newBlogObject.author} Saved!`)
         setTimeout(() => {
             setNotification(null)
-        }, 5000)
+        }, 3000)
     }
 
     const updateLike = async (id, likes) => {
@@ -65,7 +65,7 @@ const App = () => {
 
             setTimeout(() => {
                 setNotification(null)
-            }, 5000)
+            }, 3000)
         }
     }
 
@@ -77,7 +77,7 @@ const App = () => {
         setNotification("Good Bye!")
         setTimeout(() => {
             setNotification(null)
-        }, 5000)
+        }, 3000)
     }
 
     const loginForm = () => (
