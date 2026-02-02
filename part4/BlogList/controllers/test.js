@@ -1,14 +1,13 @@
-const router = require("express").Router()
+const loginRouter = require("express").Router()
 const Blog = require("../model/blog")
 const User = require("../model/user")
 
 // /api/testing/reset
-router.post("/reset", async (request, response) => {
+loginRouter.post("/reset", async (request, response) => {
     await Blog.deleteMany({})
     await User.deleteMany({})
 
     response.status(204).end()
-
 })
 
-module.exports = router
+module.exports = loginRouter
