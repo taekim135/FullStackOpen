@@ -8,6 +8,7 @@ const middleware = require('./utils/middleware')
 const blogsRouter = require('./controllers/blogs')
 const userRouter = require("./controllers/users")
 const loginRouter = require("./controllers/login")
+const testRouter = require("./controllers/test")
 
 const app = express()
 app.use(express.json())
@@ -32,6 +33,10 @@ app.use(middleware.tokenExtractor)
 
 // only apply userExtractor to routes where needed
 // app.use(middleware.userExtractor)
+
+if(process.env.NODE_ENV === "test"){
+    app.use("/api/test", testRouter)
+}
 
 app.use('/api/blogs', blogsRouter)
 app.use("/api/users", userRouter)
