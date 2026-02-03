@@ -60,7 +60,7 @@ const App = () => {
         const deletePostResult = await blogService.deletePost(id)
 
         if (deletePostResult === ""){
-            setNotification("Blog Removed Successfullly!")
+            setNotification("Blog Removed Successfully!")
             setBlogs(blogs.filter(blog => blog.id !== id))
 
             setTimeout(() => {
