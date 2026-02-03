@@ -35,7 +35,7 @@ app.use(middleware.tokenExtractor)
 // app.use(middleware.userExtractor)
 
 if(process.env.NODE_ENV === "test"){
-    app.use("/api/test", testRouter)
+    app.use("/api/testing", testRouter)
 }
 
 app.use('/api/blogs', blogsRouter)
