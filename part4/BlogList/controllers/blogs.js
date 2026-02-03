@@ -26,7 +26,7 @@ blogRouter.post('/', userExtractor, async (request, response) => {
 
   const result = await newData.save()
   await result.populate('user', 'username name id') 
-  console.log('Data saved to Blog DB')
+  //console.log('Data saved to Blog DB')
 
   request.user.blogs = request.user.blogs.concat(result._id)
   await request.user.save()
@@ -53,7 +53,7 @@ blogRouter.delete("/:id", userExtractor, async (request,response) => {
   await request.user.save()
 
   response.status(204).end()
-  console.log('Data deleted!')
+  //console.log('Data deleted!')
 })
 
 // update # likes of a post
