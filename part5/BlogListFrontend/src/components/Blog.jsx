@@ -35,7 +35,7 @@ const Blog = ({blog, updateFunction, deleteFunction, requester}) => {
                 {blog.title} By {blog.author} <button onClick={handleDetail}>{showDetail ? "Hide" : "Show"}</button>
             </div>
             {(showDetail && (
-                <div>
+                <div data-testid = {"like"}>
                     {blog.url} <br/> {blog.likes} <button onClick={handleLike}>Like</button> <br/> {blog.author}
                 </div>
             ))}
