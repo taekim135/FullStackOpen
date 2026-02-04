@@ -68,7 +68,7 @@ describe('Blog app', () => {
       await expect(page.getByTestId("like")).toContainText("1")
     })
 
-    test.only("a blog can be deleted by the creator", async ({page, request}) => {
+    test("a blog can be deleted by the creator", async ({page}) => {
       // popup message event listener
       page.on('dialog', async (dialog) => {
         expect(dialog.message()).toContain("Remove", {exact: false})
@@ -82,26 +82,46 @@ describe('Blog app', () => {
       await expect(page.locator(".pass")).toContainText("Removed")
 
       await expect(page.getByText("blog for testing delete")).not.toBeVisible()
+    })
 
-      // log in again using a different account to double check the delete button visibility
-      // await page.getByRole("button", {name: "Logout"}).click()
-      
-      // await request.post("/api/users", {
-      //   data: {
-      //     name: 'You',
-      //     username: 'Tester2',
-      //     password: 'testtest'
-      //   }
-      // })
+    test("only the creator can see the delete button for their blgos", async ({page, request}) => {
+      await createBlog(page, "testing delete button visibility", "Tester1", "www.test2.org")
+      await page.getByRole("button", {name: "Show"}).click()
+      await expect(page.getByRole("button", {name: "Delete"})).toBeVisible()
 
-      // await loginUser(page, "Tester2", "testtest")
-      // await page.getByRole("button", {name: "Show"}).click()
-      // await expect(page.getByRole("button", {name: "Delete"})).not.toBeVisible()
+      //Re-login with another account & check 
+      await page.getByRole("button", {name: "Logout"}).click()
+
+       await request.post("/api/users", {
+        data: {
+          name: 'You',
+          username: 'Tester2',
+          password: 'testtest'
+        }
+      })
+
+      await loginUser(page, "Tester2", "testtest")
+      await page.getByRole("button", {name: "Show"}).click()
+      await expect(page.getByRole("button", {name: "Delete"})).not.toBeVisible()
+    })
+
+    test("blogs are arranged in the order of #likes (most at top)", async ({page, request}) => {
+      await createBlog(page, "testing blogs order1", "Tester1", "www.test1.org")
+      await page.getByRole("button", {name: "Show"}).click()
+      await page.getByRole("button", {name: "Like"}).click()
+
+      await createBlog(page, "testing blogs order2", "Tester1", "www.test2.org")
+      await page.getByRole("button", {name: "Show"}).click()
+      await page.getByRole("button", {name: "Like"}).click()
+      await page.getByRole("button", {name: "Like"}).click()
+
+      await createBlog(page, "testing blogs order3", "Tester1", "www.test3.org")
+      await page.getByRole("button", {name: "Show"}).click()
+      await page.getByRole("button", {name: "Like"}).click()
+      await page.getByRole("button", {name: "Like"}).click()
+      await page.getByRole("button", {name: "Like"}).click()
 
     })
+
   })
-
-
-
-
 })
