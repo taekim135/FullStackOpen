@@ -57,7 +57,7 @@ describe('Blog app', () => {
 
     test("the new blog shows up on the list", async ({page}) => {
       await createBlog(page, "2nd test for new blog", "Tester1", "www.test2.org")
-      await expect(page.getByText("2nd test for new blog")).toBeVisible()
+      await expect(page.getByTestId("blog")).toContainText("2nd test for new blog")
     })
 
     test("a blog can be liked", async ({page}) => {
@@ -105,23 +105,36 @@ describe('Blog app', () => {
       await expect(page.getByRole("button", {name: "Delete"})).not.toBeVisible()
     })
 
-    test("blogs are arranged in the order of #likes (most at top)", async ({page, request}) => {
+    test("blogs are arranged in the order of #likes (most at top)", async ({page}) => {
       await createBlog(page, "testing blogs order1", "Tester1", "www.test1.org")
-      await page.getByRole("button", {name: "Show"}).click()
-      await page.getByRole("button", {name: "Like"}).click()
+      const blog1 = page.getByTestId("blog").filter({ hasText: 'testing blogs order1' })
+      await blog1.getByRole("button", {name: "Show"}).click()
+      await blog1.getByRole("button", {name: "Like"}).click()
+      await expect(blog1.getByTestId("like")).toContainText("1")
 
       await createBlog(page, "testing blogs order2", "Tester1", "www.test2.org")
-      await page.getByRole("button", {name: "Show"}).click()
-      await page.getByRole("button", {name: "Like"}).click()
-      await page.getByRole("button", {name: "Like"}).click()
+      const blog2 = page.getByTestId("blog").filter({ hasText: 'testing blogs order2' })
+      await blog2.getByRole("button", {name: "Show"}).click()
+      await blog2.getByRole("button", {name: "Like"}).click()
+      await expect(blog2.getByTestId("like")).toContainText("1") 
+      await blog2.getByRole("button", {name: "Like"}).click()
+      await expect(blog2.getByTestId("like")).toContainText("2")
 
-      await createBlog(page, "testing blogs order3", "Tester1", "www.test3.org")
-      await page.getByRole("button", {name: "Show"}).click()
-      await page.getByRole("button", {name: "Like"}).click()
-      await page.getByRole("button", {name: "Like"}).click()
-      await page.getByRole("button", {name: "Like"}).click()
+      await createBlog(page, "testing blogs order3", "Tester1", "www.test2.org")
+      const blog3 = page.getByTestId("blog").filter({ hasText: 'testing blogs order3' })
+      await blog3.getByRole("button", {name: "Show"}).click()
+      await blog3.getByRole("button", {name: "Like"}).click()
+      await expect(blog3.getByTestId("like")).toContainText("1") 
+      await blog3.getByRole("button", {name: "Like"}).click()
+      await expect(blog3.getByTestId("like")).toContainText("2") 
+      await blog3.getByRole("button", {name: "Like"}).click()
+      await expect(blog3.getByTestId("like")).toContainText("3")
 
+      //Below checks the order of the blogs - highest likes at top
+      const allBlogs = await page.getByTestId("blog").all()
+      await expect(allBlogs[0]).toContainText("order3")
+      await expect(allBlogs[1]).toContainText("order2")
+      await expect(allBlogs[2]).toContainText("order1")
     })
-
   })
 })
