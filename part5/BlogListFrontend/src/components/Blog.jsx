@@ -30,13 +30,15 @@ const Blog = ({blog, updateFunction, deleteFunction, requester}) => {
     }
 
     return (
-        <div style={blogStyle}>
-            <div>
+        <div style={blogStyle} data-testid={"blog"}>
+            <div data-testid={"title"}>
                 {blog.title} By {blog.author} <button onClick={handleDetail}>{showDetail ? "Hide" : "Show"}</button>
             </div>
             {(showDetail && (
-                <div data-testid = {"like"}>
-                    {blog.url} <br/> {blog.likes} <button onClick={handleLike}>Like</button> <br/> {blog.author}
+                <div data-testid = {"details"}>
+                    <div data-testid={"url"}>{blog.url}</div>
+                    <div data-testid={"like"}>{blog.likes} <button onClick={handleLike}>Like</button> </div>
+                    <div data-testid={"author"}>{blog.author}</div>
                 </div>
             ))}
             {(isCreator && (
