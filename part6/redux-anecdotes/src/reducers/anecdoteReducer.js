@@ -35,7 +35,8 @@ const anecdoteReducer = (state = initialState, action) => {
       {
         const anecdoteToVote = state.find(anec => anec.id === action.payload)
         const votedAnecdote = {...anecdoteToVote, votes: anecdoteToVote.votes + 1}
-        return state.map(anec => anec.id !== anecdoteToVote.id ? anec : votedAnecdote)
+        const newAnecdotes =  state.map(anec => anec.id !== anecdoteToVote.id ? anec : votedAnecdote)
+        return newAnecdotes.sort((a,b) => b.votes - a.votes)
       } 
     case "ADD":
       return state.concat(asObject(action.payload))
