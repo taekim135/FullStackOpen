@@ -32,11 +32,13 @@
     },
     {
       "id": "1cd3",
-      "content": "testing add with fetch api 22222"
+      "content": "testing add with fetch api 22222",
+      "votes": 7
     },
     {
       "id": "5e74",
-      "content": "testing add with thunk"
+      "content": "testing add with thunk",
+      "votes": 4
     }
   ]
 }

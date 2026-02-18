@@ -1,3 +1,4 @@
+// for updating compo states
 import { createSlice } from "@reduxjs/toolkit"
 import anecdoteService from "../services/anecdotes"
 // const anecdotesAtStart = [
@@ -40,12 +41,10 @@ const anecdoteSlice = createSlice({
   }
 })
 
-export const {vote, add} = anecdoteSlice.actions
 export default anecdoteSlice.reducer
 
-const {setAnecdotes} = anecdoteSlice.actions
+const {setAnecdotes, add, vote} = anecdoteSlice.actions
 
-// TODO: 6.17 -> create new anec using async action creators/thunk
 
 export const initialAnecdotes = () => {
   return async (dispatch) => {
@@ -56,7 +55,14 @@ export const initialAnecdotes = () => {
 
 export const createAnecdote = (content) => {
   return async (dispatch) => {
-     const newAnec = await anecdoteService.addAnecdote(content)
-     dispatch(add(newAnec))
+    const newAnec = await anecdoteService.addAnecdote(content)
+    dispatch(add(newAnec))
+  }
+}
+
+export const voteAnecdote = (id, number) => {
+  return async (dispatch) => {
+    const updateVote = await anecdoteService.voteAnecdote(id, number)
+    dispatch(vote(updateVote.id))
   }
 }
