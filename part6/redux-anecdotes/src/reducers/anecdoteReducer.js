@@ -45,10 +45,18 @@ export default anecdoteSlice.reducer
 
 const {setAnecdotes} = anecdoteSlice.actions
 
+// TODO: 6.17 -> create new anec using async action creators/thunk
+
 export const initialAnecdotes = () => {
   return async (dispatch) => {
-    console.log('async thunk running');
     const anecdotes = await anecdoteService.getAll()
     dispatch(setAnecdotes(anecdotes))
+  }
+}
+
+export const createAnecdote = (content) => {
+  return async (dispatch) => {
+     const newAnec = await anecdoteService.addAnecdote(content)
+     dispatch(add(newAnec))
   }
 }
