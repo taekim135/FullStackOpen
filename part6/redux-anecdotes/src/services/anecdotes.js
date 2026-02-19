@@ -25,6 +25,8 @@ const addAnecdote = async (content) => {
     return await response.json()
 }
 
+// TODO: 6.19 notificaiton
+
 const voteAnecdote = async (id, number) => {
      const options = {
         method: 'PATCH',
@@ -33,7 +35,7 @@ const voteAnecdote = async (id, number) => {
     }
 
     const response = await fetch(baseURL + "/" + id, options)
-    
+
     if (!response.ok) throw new Error("Failed to vote from server")
 
     return await response.json()
