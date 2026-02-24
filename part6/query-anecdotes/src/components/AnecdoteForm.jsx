@@ -15,6 +15,7 @@ const AnecdoteForm = () => {
   })
 
   // TODO: adding new note works (including vote) but optimization fails
+  // TODO: 6.22 voting using query
 
   const onCreate = (event) => {
     event.preventDefault()

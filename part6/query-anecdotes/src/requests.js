@@ -27,3 +27,21 @@ export const createAnecdote = async (content) => {
     return await response.json()
 }
 
+
+export const voteAnecdote = async (updatedAnec) => {
+    const options = {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        // para is already an object so no {} needed
+        body: JSON.stringify(updatedAnec)
+    }
+
+    const response = await fetch(baseURL+"/"+updatedAnec.id, options)
+
+    if (!response.ok){
+        throw new Error("Failed to vote anecdotes")
+    }
+        
+    return await response.json()
+}
+
