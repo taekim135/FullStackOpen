@@ -23,3 +23,5 @@
 #### React Query for fetching and posting data
 #### useQuery and useMutation hooks
 #### optimization with useQueryClient and invalidateQueries
+#### useReducer for managing notification state
+#### Context
