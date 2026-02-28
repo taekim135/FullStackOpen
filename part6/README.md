@@ -19,9 +19,13 @@
 #### async action creators with redux-thunk
 #### returning a function from an action creator
 
-# Exercises 6.20 - 6.22: Anecdotes Redux
+# Exercises 6.20 - 6.22: Anecdotes Query
 #### React Query for fetching and posting data
 #### useQuery and useMutation hooks
 #### optimization with useQueryClient and invalidateQueries
 #### useReducer for managing notification state
-#### Context
+#### useContext
+
+# Exercises 6.23 - 6.24: Anecdotes Query
+#### Notifications with React Context
+#### useContext for accessing notification context
