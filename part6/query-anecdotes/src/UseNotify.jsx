@@ -2,6 +2,7 @@ import { useContext } from "react"
 import NotificationContext from "./NotificationContext"
 // custom hook that encapsulates the notification dispatch logic — 
 // it grabs dispatchMessage from NotificationContext
+// just to fix the fast reload warning which could've been ignored
 
 
 // export custom hooks must follow "use" convention naming.
