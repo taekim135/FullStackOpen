@@ -10,6 +10,8 @@ const setNotification = (state, action) => {
             return "You voted:  " + action.payload
         case "CLEAR":
             return ""
+        case "ERROR":
+            return "Anecdote is too short! Minimum length of 5 required"
         default:
             return state
     }

@@ -9,6 +9,7 @@ const App = () => {
   const queryClient = useQueryClient()
   const {dispatchMessage} = useContext(NotificationContext)
 
+  // useMutation → for changing data on the server (POST, PUT, DELETE requests)
   const voteMutation = useMutation({
     mutationFn: voteAnecdote,
     onSuccess: () => {
@@ -24,6 +25,7 @@ const App = () => {
     }, 5000)
   }
 
+  // useQuery → for reading data from the server (GET requests)
   const result = useQuery(
     {
       queryKey: ['anecdotes'],
