@@ -1,8 +1,7 @@
-import { useReducer } from "react"
-import { createContext } from "react"
+import { useReducer, createContext, useContext } from "react"
 
 // reducer function
-const setNotification = (state, action) => {
+const controlNotification = (state, action) => {
     switch (action.type){
         case "SET":
             return "New Anecdote created: " + action.payload
@@ -20,9 +19,10 @@ const setNotification = (state, action) => {
 
 const NotificationContext = createContext()
 
+// component
 export const NotificationContextProvider = (prop) => {
             // state, dispatch 
-    const [ message, dispatchMessage ] = useReducer(setNotification, "")
+    const [ message, dispatchMessage ] = useReducer(controlNotification, "")
 
     return (
         <NotificationContext.Provider value = {{message, dispatchMessage}}>
@@ -30,7 +30,5 @@ export const NotificationContextProvider = (prop) => {
         </NotificationContext.Provider>
     )
 }
-
-
 
 export default NotificationContext

@@ -1,11 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { createAnecdote } from "../requests"
-import { useContext } from "react"
-import NotificationContext from "../NotificationContext"
+import { useNotify } from "../UseNotify"
 
 const AnecdoteForm = () => {
   const queryClient = useQueryClient()
-  const {dispatchMessage} = useContext(NotificationContext)
+  const Notify = useNotify()
 
   // Unlike queries, mutations are typically used to create/update/delete data or perform server side-effects
   const newAnecMutation = useMutation({
@@ -14,17 +13,10 @@ const AnecdoteForm = () => {
       const anec = queryClient.getQueryData(["anecdotes"])
       //queryClient.invalidateQueries({ queryKey: ['anecdotes'] })
       queryClient.setQueryData(['anecdotes'], anec.concat(newAnec))
-      dispatchMessage({type: "SET", payload: newAnec.content})
-      setTimeout(() => {
-        dispatchMessage({type: "CLEAR"})
-      }, 5000)
+      Notify("SET", newAnec.content)
     },
     onError: () => {
-      dispatchMessage({type: "ERROR"})
-      setTimeout(() => {
-        dispatchMessage({type: "CLEAR"})
-      }, 5000)
-
+      Notify("ERROR") 
     }
   })
 
