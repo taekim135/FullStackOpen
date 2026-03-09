@@ -23,9 +23,14 @@ const errorHandler = (error, request, response, next) => {
 }
 
 
+// token only needed after login
+// or @routes where login is required
+// like posting or deleting
+// 
 const tokenExtractor = (request, response, next) => {
   const authorization = request.get("authorization")
 
+  // no Bearer autho found, just move onto the next middleware
   if (authorization && authorization.startsWith("Bearer")){
     const Extractedtoken =  authorization.replace("Bearer ", "")
     // do not send the token as it will end the request
@@ -41,6 +46,7 @@ const tokenExtractor = (request, response, next) => {
     // Serves it (response.json())
     request.token = Extractedtoken
   }
+
   next()
 }
 

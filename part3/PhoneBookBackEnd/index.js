@@ -9,8 +9,6 @@ const Phone = require("./models/phoneDB")
 app.use(express.json()) // allows auto parsing of json @ incoming request - Content-Type: application/json
 app.use(express.static("dist")) //grab static files from frontend
 
-//TODO: 3.20 -> validation for phone number format
-
 // token = placeholder
 // Define what :body should be replaced with
 morgan.token("body", (request) => {
@@ -30,11 +28,6 @@ const errorHandler = (error, request,response,next) => {
     }
     next(error)
 }
-
-
-// app.get("/", (request,response)=>{
-//     response.send("working")
-// })
 
 
 app.get("/api/persons", (request,response) => {

@@ -26,7 +26,6 @@ blogRouter.post('/', userExtractor, async (request, response) => {
 
   const result = await newData.save()
   await result.populate('user', 'username name id') 
-  //console.log('Data saved to Blog DB')
 
   request.user.blogs = request.user.blogs.concat(result._id)
   await request.user.save()

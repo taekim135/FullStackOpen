@@ -28,10 +28,13 @@ mongoose.connect(config.mongoUrl, { family: 4 })
 
 app.use(express.static('dist'))
 // use the middleware functions in all routes
+// technically, token not needed @all routes (only @routes where login needed)
+// since skipped to the next middleware if Bearer not found
 app.use(middleware.requestLogger)
 app.use(middleware.tokenExtractor)
 
 // only apply userExtractor to routes where needed
+// this is for global. thus keep it inside the parameter of controller file where needed
 // app.use(middleware.userExtractor)
 
 if(process.env.NODE_ENV === "test"){

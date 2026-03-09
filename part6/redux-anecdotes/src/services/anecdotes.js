@@ -25,8 +25,6 @@ const addAnecdote = async (content) => {
     return await response.json()
 }
 
-// TODO: 6.19 notificaiton
-
 const voteAnecdote = async (id, number) => {
      const options = {
         method: 'PATCH',

@@ -1,4 +1,6 @@
-// The handling of environment variables 
+// The handling of environment variables (exported for other files to use)
+// no direct access to process.env for security
+
 
 require("dotenv").config()
 
