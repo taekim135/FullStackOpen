@@ -12,13 +12,17 @@ const App = () => {
   const voteMutation = useMutation({
     mutationFn: voteAnecdote,
     onSuccess: () => {
+      // the cached data under key ['anecdotes'] is now stale — throw it out and re-fetch it from the server.
+      // React Query automatically re-runs getAnecdotes, new list + upvote cached & UI re-rendered
       queryClient.invalidateQueries({ queryKey: ['anecdotes'] })
+    },
+    onError: () => {
+      SetNotify("ERROR") 
     }
   })
 
   const handleVote = (anecdote) => {
     voteMutation.mutate({...anecdote, votes: anecdote.votes + 1})
-    SetNotify("VOTE", anecdote.content)
   }
 
   // useQuery → for reading data from the server (GET requests)
