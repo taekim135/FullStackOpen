@@ -10,6 +10,7 @@ const AnecdoteForm = () => {
   const newAnecMutation = useMutation({
     mutationFn: createAnecdote,
     onSuccess: (newAnec) => {
+      // fetch cached anecdotes list from front
       const anec = queryClient.getQueryData(["anecdotes"])
       //queryClient.invalidateQueries({ queryKey: ['anecdotes'] })
       queryClient.setQueryData(['anecdotes'], anec.concat(newAnec))

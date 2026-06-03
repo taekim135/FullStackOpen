@@ -11,6 +11,9 @@ export const useNotify = () => {
     const {dispatchMessage} = useContext(NotificationContext)
 
     return (type, payload) => {
+        // type and payload goes into controlNotification function
+        // dispatch = delivery
+        // reducer = processing person
         dispatchMessage({ type, payload })
         setTimeout(() => {
             dispatchMessage({ type: "CLEAR" })
