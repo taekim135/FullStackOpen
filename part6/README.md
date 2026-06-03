@@ -1,3 +1,6 @@
+# Part 6: State Management with Redux and React Query
+#### Frontend, state management using Redux, React Query
+
 # Exercises 6.1 - 6.2: Unicafe Redux
 #### Reducer and Store
 
@@ -19,13 +22,14 @@
 #### async action creators with redux-thunk
 #### returning a function from an action creator
 
-# Exercises 6.20 - 6.22: Anecdotes Query
+# Anecdotes Query (Frontend)
+## Exercises 6.20 - 6.22:
 #### React Query for fetching and posting data
 #### useQuery and useMutation hooks
 #### optimization with useQueryClient and invalidateQueries
 #### useReducer for managing notification state
 #### useContext
 
-# Exercises 6.23 - 6.24: Anecdotes Query
+## Exercises 6.23 - 6.24:
 #### Notifications with React Context
 #### useContext for accessing notification context
