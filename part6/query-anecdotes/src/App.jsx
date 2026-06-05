@@ -6,7 +6,7 @@ import { useNotify } from "./UseNotify"
 
 const App = () => {
   const queryClient = useQueryClient()
-  const SetNotify = useNotify()
+  const notify = useNotify()
 
   // useMutation → for changing data on the server (POST, PUT, DELETE requests)
   const voteMutation = useMutation({
@@ -17,7 +17,7 @@ const App = () => {
       queryClient.invalidateQueries({ queryKey: ['anecdotes'] })
     },
     onError: () => {
-      SetNotify("ERROR") 
+      notify("ERROR") 
     }
   })
 

@@ -4,7 +4,7 @@ import { useNotify } from "../UseNotify"
 
 const AnecdoteForm = () => {
   const queryClient = useQueryClient()
-  const Notify = useNotify()
+  const notify = useNotify()
 
   // Unlike queries, mutations are typically used to create/update/delete data or perform server side-effects
   const newAnecMutation = useMutation({
@@ -14,10 +14,10 @@ const AnecdoteForm = () => {
       const anec = queryClient.getQueryData(["anecdotes"])
       //queryClient.invalidateQueries({ queryKey: ['anecdotes'] })
       queryClient.setQueryData(['anecdotes'], anec.concat(newAnec))
-      Notify("SET", newAnec.content)
+      notify("SET", newAnec.content)
     },
     onError: () => {
-      Notify("ERROR") 
+      notify("ERROR") 
     }
   })
 
