@@ -7,7 +7,7 @@ const AnecdoteForm = () => {
   const notify = useNotify()
 
   // Unlike queries, mutations are typically used to create/update/delete data or perform server side-effects
-  const newAnecMutation = useMutation({
+  const createMutation = useMutation({
     mutationFn: createAnecdote,
     onSuccess: (newAnec) => {
       // fetch cached anecdotes list from front
@@ -25,7 +25,7 @@ const AnecdoteForm = () => {
   const onCreate = (event) => {
     event.preventDefault()
     const content = event.target.anecdote.value
-    newAnecMutation.mutate(content)
+    createMutation.mutate(content)
     event.target.anecdote.value = ''
   }
 
