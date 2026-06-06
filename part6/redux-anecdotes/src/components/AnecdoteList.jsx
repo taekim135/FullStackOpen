@@ -4,6 +4,8 @@ import {activateNotification} from "../reducers/notificationReducer"
 
 const AnecdoteList = () => {
     const dispatch = useDispatch()
+    // useSelector reads from store
+    // useDispatch grans the dispatch function to send actions
     const anecdotes = useSelector(({filter, anecdotes}) => {
         if (filter === "") return anecdotes
 

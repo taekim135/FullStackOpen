@@ -1,4 +1,4 @@
-// fetch api for sending request to server for data/backend
+// fetch api for sending request to the server for data/backend
 
 const baseURL = "http://localhost:3003/anecdotes"
 

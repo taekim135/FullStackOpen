@@ -4,11 +4,13 @@ import notificationReducer from "./reducers/notificationReducer"
 import { configureStore } from '@reduxjs/toolkit'
 
 
+// states stored in one central place
+// split into splices
 const store = configureStore({
     reducer: {
-        anecdotes: anecdoteReducer,
-        notifications: notificationReducer,
-        filter: filterReducer
+        anecdotes: anecdoteReducer,      // slice 1
+        notifications: notificationReducer,     // slice 2
+        filter: filterReducer       // slice 3
     }
 })
 

@@ -7,6 +7,7 @@ import { useEffect } from 'react'
 import { initialAnecdotes } from './reducers/anecdoteReducer'
 
 const App = () => {
+  // grab the dispatch function
   const dispatch = useDispatch()
 
   useEffect(() => {
