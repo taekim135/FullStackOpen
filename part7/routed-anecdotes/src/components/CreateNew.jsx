@@ -23,15 +23,15 @@ const CreateNew = ({ addAnecdote }) => {
       <form onSubmit={handleSubmit}>
         <div>
           content
-          <input {...content}/>
+          <input {...content.inputs}/>
         </div>
         <div>
           author
-          <input {...author} />
+          <input {...author.inputs} />
         </div>
         <div>
           url for more info
-          <input {...info} />
+          <input {...info.inputs} />
         </div>
         <button>create</button>
       </form>
