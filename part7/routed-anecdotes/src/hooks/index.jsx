@@ -1,3 +1,5 @@
+// custom hooks
+
 import { useState,useEffect } from 'react'
 import anecdoteService from "../services/anecdotes"
 
@@ -21,6 +23,7 @@ export const useField = (type) => {
 export const useAnecdotes = () => {
     const [anecdotes, setAnecdotes] = useState([])
 
+    // initial anecdotes from the server
     useEffect(() => {
         anecdoteService.getAll().then(data => setAnecdotes(data))
     }, [])
@@ -31,8 +34,15 @@ export const useAnecdotes = () => {
         })
     }
 
+    const deleteAnecdote = (id) => {
+        anecdoteService.remove(id).then(() => {
+            setAnecdotes(anecdotes => anecdotes.filter(anec => anec.id !== id))
+        })
+    }
+
     return {
         anecdotes,
-        addAnecdote
+        addAnecdote,
+        deleteAnecdote
     }
 }

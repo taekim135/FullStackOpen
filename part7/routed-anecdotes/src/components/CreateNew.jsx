@@ -1,8 +1,13 @@
 import { useNavigate } from 'react-router-dom'
-import { useField } from '../hooks'
+import { useAnecdotes, useField } from '../hooks'
 
-const CreateNew = ({ addAnecdote }) => {
+const CreateNew = () => {
   const navigate = useNavigate()
+  // these hooks are not shared globally
+  // each compo has its own copy of state
+  // but navigate(/) fetches the latest one 
+  // so it looks like global
+  const {addAnecdote} = useAnecdotes()
 
   // hook packages everything into 1
   // value, type, onChange function
