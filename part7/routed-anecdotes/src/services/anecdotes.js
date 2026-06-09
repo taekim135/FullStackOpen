@@ -1,3 +1,4 @@
+// small backend to talk to
 const baseUrl = 'http://localhost:3001/anecdotes'
 
 const getAll = async () => {
@@ -24,4 +25,14 @@ const createNew = async (object) => {
   return await response.json()
 }
 
-export default { getAll, createNew }
+const remove = async (id) => {
+  const response = await fetch(baseUrl + "/" + id, {
+    method: 'DELETE'
+  })
+  
+  if (!response.ok) {
+    throw new Error('Failed to delete anecdote')
+  }
+}
+
+export default { getAll, createNew, remove }
